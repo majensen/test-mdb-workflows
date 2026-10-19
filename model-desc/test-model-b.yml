@@ -1,0 +1,166 @@
+Handle: TEST_B
+Version: 0.0.1
+Nodes:
+  case:
+    Props:
+      - case_id
+      - patient_id
+      - race
+      - sex_at_birth
+  sample:
+    Props:
+      - sample_type
+      - sample_site
+  file:
+    Props:
+      - md5sum
+      - file_name
+      - file_size
+  diagnosis:
+    Props:
+      - disease
+Relationships:
+  of_case:
+    Mul: one_to_one
+    Props:
+      - days_to_sample
+    Ends:
+      - Src: sample
+        Dst: case
+        Mul: many_to_one
+      - Src: diagnosis
+        Dst: case
+  of_sample:
+    Mul: one_to_one
+    Props: null
+    Ends:
+      - Src: file
+        Dst: sample
+        Mul: many_to_many
+  derived_from:
+    Mul: one_to_many
+    Props:
+      - id
+    Ends:
+      - Src: file
+        Dst: file
+        Props:
+          - workflow_id
+      - Src: sample
+        Dst: sample
+PropDefinitions:
+  case_id:
+    Type:
+      pattern: "^CASE-[0-9]+$"
+  patient_id:
+    Type: string
+    Term:
+      - Origin: caDSR
+        Code: "11221122"
+        Version: "1"
+        Value: "Participant Identifier in Study"
+  race:
+    Term:
+      - Origin: caDSR
+        Code: "2192199"
+        Value: Race Category Text
+        Version: "1.00"
+    Enum:
+      - White
+      - Black or African American
+      - Asian
+  sex_at_birth:
+    Term:
+      - Origin: caDSR
+        Code: '7572817'
+        Value: Person Sex at Birth Category
+        Version: "2.0"
+    Enum:
+      - Male
+      - Female
+  sample_type:
+    Enum:
+      - normal
+      - tumor
+  sample_site:
+    Enum:
+      - Origin: CRDC
+        Code: CRDC0002
+        Version: "1"
+  md5sum:
+    Type:
+      pattern: "^[a-f0-9]{40}"
+  file_name:
+    Type: string
+  file_size:
+    Type:
+      integer
+  disease:
+    Enum:
+      - Origin: CRDC
+        Version: "1"
+        Code: CRDC0001
+  days_to_sample:
+    Type:
+      units:
+        - days
+      value_type: integer
+  id:
+    Type: string
+  workflow_id:
+    Type:
+      # uuid
+      pattern: "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+Terms:
+  White:
+    Origin: caDSR
+    Definition: Denotes person with European, Middle Eastern, or North African ancestral
+      origin who identifies, or is identified, as White.
+    Code: '2572236'
+    Version: '1'
+    Value: White
+  Black or African American:
+    Origin: caDSR
+    Definition: A person having origins in any of the Black racial groups of Africa.
+      Terms such as \"Haitian\" or \"Negro\" can be used in addition to \"Black or
+      African American\". (OMB)
+    Code: '2572313'
+    Version: '1'
+    Value: 'Black or African American'
+  Asian:
+    Origin: caDSR
+    Definition: A person having origins in any of the original peoples of the Far
+      East, Southeast Asia, or the Indian subcontinent, including for example, Cambodia,
+      China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand,
+      and Vietnam. (OMB)
+    Code: '2572233'
+    Version: '1'
+    Value: Asian
+  normal:
+    Origin: Fake
+    Definition: Of a biospecimen - not cancerous
+    Code: '11111'
+    Value: Normal
+  tumor:
+    Origin: Fake
+    Definition: Of a biospecimen - cancerous
+    Code: '22222'
+    Value: Tumor
+
+  Female:
+    Origin: caDSR
+    Definition: An individual who reports belonging to the cultural gender role distinction
+      of female.
+    Code: '2567172'
+    Version: '1'
+    Value: Female
+  Male:
+    Origin: caDSR
+    Definition: An individual who reports belonging to the cultural gender role distinction
+      of male.
+    Code: '2567171'
+    Version: '1'
+    Value: Male
+
+    
+  
