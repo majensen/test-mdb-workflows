@@ -4,6 +4,7 @@ This is a fixture that enables tests of components of the bento-mdb update workf
 
 # Usage
 
+	git clone --recurse-submodules  https://github.com/majensen/test-mdb-workflows
 	cd test-mdb-workflows
 	tar -xzf neodata.tar.gz
 	uv pip install -e .

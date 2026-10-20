@@ -11,6 +11,7 @@ def main():
     cmd = [
         "docker", "run",
         "--detach",
+        "--env", "NEO4J_AUTH=none",
         "--name", "mini-mdb",
         "--publish", "7474:7474",
         "--publish", "7687:7687",
