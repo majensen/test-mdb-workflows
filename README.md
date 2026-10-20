@@ -5,6 +5,7 @@ This is a fixture that enables tests of components of the bento-mdb update workf
 # Usage
 
 	cd test-mdb-workflows
+	tar -xzf neodata.tar.gz
 	uv pip install -e .
 	# start the database
 	uv run run_minimdb
